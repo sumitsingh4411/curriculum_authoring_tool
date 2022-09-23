@@ -3,7 +3,15 @@
   font-weight: 700;
   color: #bdbdbd;
 }
-
+.topHeader__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.download-json-file {
+  color: blue;
+  cursor: pointer;
+}
 .topHeader__container {
   width: 100%;
   display: flex;

@@ -91,6 +91,7 @@ export default function CustomInput({
           setText={setText}
           index={index}
           localStandard={localStandard}
+          setCurrentCusor={setCurrentCusor}
           currentCusor={currentCusor}
         />
         <div
