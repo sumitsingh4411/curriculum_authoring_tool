@@ -7,11 +7,9 @@ const customInputSlice = createSlice({
   initialState: {
     allStandard: [
       {
-        textColor: "#0cdde0",
         text: "",
         id: getRandromNumber(),
         indent: 0,
-        children: 0,
       },
     ],
   },

@@ -5,7 +5,7 @@ import {
   customInputActions,
   selectCustomInput,
 } from "../../redux/slices/customInputSlice";
-import { getRandomColor, getRandromNumber } from "../../utils/helper";
+import { getIndent, getRandromNumber } from "../../utils/helper";
 import { INITIAL_STATE } from "../../utils/constant";
 
 export default function CustomButton({ setText }: any) {
@@ -15,10 +15,9 @@ export default function CustomButton({ setText }: any) {
   const addStandard = () => {
     let ans: any = [...allStandard];
     ans.push({
-      textColor: getRandomColor(allStandard[allStandard.length - 1].indent),
       text: INITIAL_STATE.text,
       id: getRandromNumber(),
-      indent: allStandard[allStandard.length - 1].indent,
+      indent: getIndent(allStandard),
     });
     setText(ans);
     dispatch(customInputActions.setAllStandard(ans));
