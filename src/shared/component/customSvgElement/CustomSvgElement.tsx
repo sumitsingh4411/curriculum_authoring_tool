@@ -11,6 +11,7 @@ export default function CustomSvgElement({
   index,
   localStandard,
   currentCusor,
+  setCurrentCusor,
 }: any) {
   const dispatch = useDispatch();
 
@@ -52,7 +53,12 @@ export default function CustomSvgElement({
   };
 
   return (
-    <div className="customSvgElement">
+    <div
+      className="customSvgElement"
+      onMouseMove={() => {
+        setCurrentCusor(index);
+      }}
+    >
       <div className="customSvgElement__container">
         <svg
           data-tip
