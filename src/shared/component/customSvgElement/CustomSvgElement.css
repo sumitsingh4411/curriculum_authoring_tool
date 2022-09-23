@@ -1,0 +1,31 @@
+.customSvgElement__container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.custom__icon__disabled {
+  width: 20px;
+  height: 20px;
+  fill: #dcdcdc;
+  fill-rule: evenodd;
+}
+.custom__icon {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  fill: #554d4d;
+  fill-rule: evenodd;
+}
+.custom__icon:hover {
+  fill: #0cdde0;
+}
+.custom__icon__disabled {
+  width: 20px;
+  height: 20px;
+  fill: #dcdcdc;
+  fill-rule: evenodd;
+  pointer-events: none;
+}
+.right_icon_change {
+  transform: rotate(180deg);
+}
