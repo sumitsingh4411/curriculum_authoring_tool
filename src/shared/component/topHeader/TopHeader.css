@@ -3,6 +3,15 @@
   font-weight: 700;
   color: #bdbdbd;
 }
+.top-header-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+.json-input{
+  width: 90px;
+}
 .topHeader__top {
   display: flex;
   justify-content: space-between;

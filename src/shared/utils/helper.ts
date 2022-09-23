@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export const getRandromNumber = () => {
   return Math.random().toString(36).substring(2, 15);
 };
@@ -30,7 +32,6 @@ export const getLeftIdentent = (allStandard: any, standard: any) => {
       ans.push({
         ...allStandard[i],
         indent: allStandard[i].indent - 1,
-        children: allStandard[i].children - 1,
         textColor: getRandomColor(allStandard[i].indent - 1),
       });
     } else {
@@ -89,4 +90,40 @@ export const changeStandard = (
     }
   }
   return ans;
+};
+
+/**
+ * This fuction is used for download json file
+ * @param allStandard
+ * @returns
+ */
+export const downloadJsonFile = (allStandard: any) => {
+  if (allStandard.length === 0 || allStandard[0].text.trim().length === 0) {
+    toast.error("Please add some standard");
+    return;
+  }
+  let filename = allStandard[0].text + ".json";
+  let contentType = "application/json;charset=utf-8;";
+  //@ts-ignore
+  if (window.navigator && window.navigator?.msSaveOrOpenBlob) {
+    var blob = new Blob(
+      //@ts-ignore
+      [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
+      { type: contentType }
+    );
+    //@ts-ignore
+    navigator?.msSaveOrOpenBlob(blob, filename);
+  } else {
+    var a = document.createElement("a");
+    a.download = filename;
+    a.href =
+      "data:" +
+      contentType +
+      "," +
+      encodeURIComponent(JSON.stringify(allStandard));
+    a.target = "_blank";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
 };

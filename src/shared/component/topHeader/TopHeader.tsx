@@ -1,44 +1,46 @@
 import { memo } from "react";
-import { useSelector } from "react-redux";
-import { selectCustomInput } from "../../redux/slices/customInputSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  customInputActions,
+  selectCustomInput,
+} from "../../redux/slices/customInputSlice";
+import { downloadJsonFile } from "../../utils/helper";
 import "./TopHeader.css";
 
-function TopHeader() {
+function TopHeader({ setText }: any) {
+  const dispatch = useDispatch();
   const { allStandard } = useSelector(selectCustomInput);
 
   const downLoadFile = async () => {
-    let filename = "data.json";
-    let contentType = "application/json;charset=utf-8;";
-    //@ts-ignore
-    if (window.navigator && window.navigator?.msSaveOrOpenBlob) {
-      var blob = new Blob(
-        //@ts-ignore
-        [decodeURIComponent(encodeURI(JSON.stringify(objectData)))],
-        { type: contentType }
-      );
-      //@ts-ignore
-      navigator?.msSaveOrOpenBlob(blob, filename);
-    } else {
-      var a = document.createElement("a");
-      a.download = filename;
-      a.href =
-        "data:" +
-        contentType +
-        "," +
-        encodeURIComponent(JSON.stringify(allStandard));
-      a.target = "_blank";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
+    downloadJsonFile(allStandard);
   };
+
+  const uploadFile = async (e: any) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const text = e.target?.result;
+      dispatch(customInputActions.setAllStandard(JSON.parse(text as string)));
+      setText(JSON.parse(text as string));
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="topHeader">
       <div className="topHeader__top">
         <h2 className="topHeader_title">MATHEMATICS</h2>
-        <p className="download-json-file" onClick={downLoadFile}>
-          Download Json file
-        </p>
+        <div className="top-header-item">
+          <input
+            className="download-json-file json-input"
+            type="file"
+            onChange={uploadFile}
+            title="Loads"
+          />
+          <p className="download-json-file" onClick={downLoadFile}>
+            Saves
+          </p>
+        </div>
       </div>
       <div className="topHeader__container">
         <div className="topHeader__container__left">
