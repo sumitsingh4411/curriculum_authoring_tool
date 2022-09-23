@@ -1,7 +1,11 @@
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { customInputActions } from "../../redux/slices/customInputSlice";
-import { getDeleteStandard, getRightIdentent } from "../../utils/helper";
+import {
+  getDeleteStandard,
+  getLeftIdentent,
+  getRightIdentent,
+} from "../../utils/helper";
 import "./CustomSvgElement.css";
 import Tooltip from "../toolTip/ToolTip";
 
@@ -20,16 +24,10 @@ export default function CustomSvgElement({
       toast.error("Can't indent more");
       return;
     }
-    setText(
-      localStandard.map((standard: any, i: number) =>
-        i === index ? { ...standard, indent: standard.indent - 1 } : standard
-      )
-    );
+    setText(getLeftIdentent(localStandard, standard));
     dispatch(
       customInputActions.setAllStandard(
-        localStandard.map((standard: any, i: number) =>
-          i === index ? { ...standard, indent: standard.indent - 1 } : standard
-        )
+        getLeftIdentent(localStandard, standard)
       )
     );
   };

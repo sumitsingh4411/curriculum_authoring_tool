@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="home">
       <div className="home__container">
-        <TopHeader />
+        <TopHeader setText={setLocalStandard} />
         {localStandard?.map((standard: any, index: number) => (
           <CustomInput
             key={index}
