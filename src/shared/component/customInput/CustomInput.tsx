@@ -4,6 +4,13 @@ import { customInputActions } from "../../redux/slices/customInputSlice";
 import CustomSvgElement from "../customSvgElement/CustomSvgElement";
 import "./CustomInput.css";
 import { debounce } from "lodash";
+import {
+  getColor,
+  getDragedList,
+  getFontSize,
+  getFontWeight,
+  setCurrentValue,
+} from "../../utils/helper";
 
 export default function CustomInput({
   standard,
@@ -19,9 +26,7 @@ export default function CustomInput({
   const changeHandler = (currentValue: any, allStandard: any, index: any) => {
     dispatch(
       customInputActions.setAllStandard(
-        allStandard.map((standard: any, i: number) =>
-          i === index ? { ...standard, text: currentValue } : standard
-        )
+        setCurrentValue(allStandard, index, currentValue)
       )
     );
   };
@@ -40,11 +45,7 @@ export default function CustomInput({
     value: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    setText(
-      localStandard.map((standard: any, i: number) =>
-        i === index ? { ...standard, text: value } : standard
-      )
-    );
+    setText(setCurrentValue(localStandard, index, value));
     setCurrentCusor(index);
     debouncedChangeHandler(value, localStandard, index);
   };
@@ -57,12 +58,10 @@ export default function CustomInput({
   };
 
   const handleDragEnd = () => {
-    const listCopy: any = [...localStandard];
-    let temp = listCopy[position.startPointer];
-    listCopy[position.startPointer] = listCopy[position.endPointer];
-    listCopy[position.endPointer] = temp;
-    setText(listCopy);
-    dispatch(customInputActions.setAllStandard(listCopy));
+    setText(getDragedList(localStandard, position));
+    dispatch(
+      customInputActions.setAllStandard(getDragedList(localStandard, position))
+    );
   };
 
   const handleDragStart = (position: any) => {
@@ -110,7 +109,11 @@ export default function CustomInput({
             onChange={(e: any) => {
               handleChange(e.target.value, index);
             }}
-            style={{ color: standard?.textColor }}
+            style={{
+              color: getColor(standard.indent),
+              fontWeight: getFontWeight(standard.indent),
+              fontSize: getFontSize(standard.indent),
+            }}
             className="customInput__container__right__input"
             placeholder="Type standard here (e.g. Numbers)"
           />

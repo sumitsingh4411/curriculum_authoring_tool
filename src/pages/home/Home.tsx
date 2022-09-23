@@ -9,7 +9,6 @@ import { INITIAL_STATE } from "../../shared/utils/constant";
 export default function Home() {
   const [localStandard, setLocalStandard] = useState([
     {
-      textColor: INITIAL_STATE.textColor,
       text: INITIAL_STATE.text,
       id: getRandromNumber(),
       indent: INITIAL_STATE.indent,

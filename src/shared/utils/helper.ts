@@ -11,18 +11,29 @@ export const checkLastChildIsFilled = (allStandard: any) => {
   return false;
 };
 
-export const getRandomColor = (key: any) => {
-  const colors = [
-    "#0cdde0",
-    "#000000",
-    "#808080",
-    "#c0c0c0",
-    "#800000",
-    "#ff0000",
-    "#800080",
-    "#ff00ff",
-  ];
-  return colors[key];
+export const getColor = (key: any) => {
+  const colors = ["#0cdde0", "#000000", "#808080", "#c0c0c0", "#800000"];
+  if (key <= colors.length) {
+    return colors[key];
+  } else {
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+  }
+};
+
+export const getFontWeight = (key: any) => {
+  const fontWeights = ["bolder", "bold", "normal"];
+  if (key <= fontWeights.length) {
+    return fontWeights[key];
+  }
+  return "normal";
+};
+
+export const getFontSize = (key: any) => {
+  const fontSizes = ["16px", "14px", "12px"];
+  if (key <= fontSizes.length) {
+    return fontSizes[key];
+  }
+  return "12px";
 };
 
 export const getLeftIdentent = (allStandard: any, standard: any) => {
@@ -32,7 +43,6 @@ export const getLeftIdentent = (allStandard: any, standard: any) => {
       ans.push({
         ...allStandard[i],
         indent: allStandard[i].indent - 1,
-        textColor: getRandomColor(allStandard[i].indent - 1),
       });
     } else {
       ans.push(allStandard[i]);
@@ -48,7 +58,6 @@ export const getRightIdentent = (allStandard: any, standard: any) => {
       ans.push({
         ...allStandard[i],
         indent: allStandard[i].indent + 1,
-        textColor: getRandomColor(allStandard[i].indent + 1),
       });
     } else {
       ans.push(allStandard[i]);
@@ -126,4 +135,24 @@ export const downloadJsonFile = (allStandard: any) => {
     a.click();
     document.body.removeChild(a);
   }
+};
+
+export const getIndent = (allStandard: any) => {
+  return allStandard?.length > 0
+    ? allStandard[allStandard?.length - 1]?.indent
+    : 0;
+};
+
+export const setCurrentValue = (allStandard: any, index: any, value: any) => {
+  return allStandard?.map((standard: any, i: number) =>
+    i === index ? { ...standard, text: value } : standard
+  );
+};
+
+export const getDragedList = (localStandard: any, position: any) => {
+  const listCopy: any = [...localStandard];
+  let temp = listCopy[position.startPointer];
+  listCopy[position.startPointer] = listCopy[position.endPointer];
+  listCopy[position.endPointer] = temp;
+  return listCopy;
 };
